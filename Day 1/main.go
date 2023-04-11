@@ -4,13 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
 func main() {
 
-	// reader := bufio.NewReader(os.Stdin)
-	filePath := "/Users/cianlaguesma/codes/adventofcode2022/Day 1/input.txt"
+	filePath := "/Users/cianlaguesma/codes/adventofcode2022/Day 1/mainInput.txt"
 	readFile, err := os.Open(filePath)
 
 	if err != nil {
@@ -27,21 +27,26 @@ func main() {
 
 	personNum := 1
 	personSum := 0
-	outArr := make(map[int]int)
+	testArr := []int{}
 	for _, line := range fileLines {
 		if line == "" {
-			fmt.Println("LOL")
 			personNum += 1
 			personSum = 0
 		}
 		num, _ := strconv.Atoi(line)
 		personSum += num
-		outArr[personNum] = personSum
+		testArr = append(testArr, personSum)
 	}
-	fmt.Println(outArr)
-	for maxnumber := range outArr {
-		fmt.Println(outArr)
+
+	sort.Slice(testArr, func(i, j int) bool {
+		return testArr[i] < testArr[j]
+	})
+	top3 := 0
+	top1 := testArr[len(testArr)-1]
+	for i := len(testArr) - 1; i >= len(testArr)-3; i-- {
+		top3 += testArr[i]
 	}
-	fmt.Println(fileLines)
+	fmt.Println(top1)
+	fmt.Println(top3)
 
 }
